@@ -207,7 +207,7 @@ function yamlResponse(data, status = 200) {
   return new Response(body, {
     status,
     headers: {
-      'Content-Type': 'application/yaml; charset=utf-8',
+      'Content-Type': 'text/yaml; charset=utf-8',
       ...CORS_HEADERS
     }
   });
