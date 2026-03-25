@@ -161,7 +161,7 @@ function toYaml(value, indent = 0) {
 
   if (Array.isArray(value)) {
     if (value.length === 0) {
-      return '[]';
+      return `${prefix}[]`;
     }
 
     return value
@@ -171,7 +171,14 @@ function toYaml(value, indent = 0) {
         }
 
         const nested = toYaml(entry, indent + 1);
-        return `${prefix}-\n${nested}`;
+        const lines = nested.split('\n');
+        const firstPrefix = '  '.repeat(indent + 1);
+        const firstLine = lines[0].startsWith(firstPrefix)
+          ? lines[0].slice(firstPrefix.length)
+          : lines[0];
+        const rest = lines.slice(1).join('\n');
+
+        return rest ? `${prefix}- ${firstLine}\n${rest}` : `${prefix}- ${firstLine}`;
       })
       .join('\n');
   }
@@ -179,11 +186,24 @@ function toYaml(value, indent = 0) {
   if (typeof value === 'object') {
     const entries = Object.entries(value);
     if (entries.length === 0) {
-      return '{}';
+      return `${prefix}{}`;
     }
 
     return entries
       .map(([key, child]) => {
+        if (Array.isArray(child) && child.length === 0) {
+          return `${prefix}${key}: []`;
+        }
+
+        if (
+          child
+          && typeof child === 'object'
+          && !Array.isArray(child)
+          && Object.keys(child).length === 0
+        ) {
+          return `${prefix}${key}: {}`;
+        }
+
         if (child === null || typeof child !== 'object') {
           return `${prefix}${key}: ${toYaml(child, 0)}`;
         }
