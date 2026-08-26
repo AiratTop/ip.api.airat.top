@@ -260,6 +260,13 @@ export default {
     const url = new URL(request.url);
     const path = normalizePath(url.pathname);
 
+    if (path === '/favicon.ico') {
+      return new Response(null, {
+        status: 204,
+        headers: { 'Cache-Control': 'public, max-age=86400' }
+      });
+    }
+
     if (path === '/robots.txt') {
       return textResponse('User-agent: *\nDisallow: /\n');
     }
