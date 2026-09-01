@@ -145,13 +145,14 @@ For custom domain binding, configure it in **Workers & Pages -> Domains & Routes
 
 ## License
 
-This project is licensed under the MIT License - see [LICENSE](LICENSE).
+The original source code, configuration, and documentation in this repository are licensed under
+the [Apache License 2.0](LICENSE), with copyright details in [NOTICE](NOTICE).
 
 ---
 
 ## Author
 
-**AiratTop**
+**AiratTop (Airat Halitov)**
 
 - Website: [airat.top](https://airat.top)
 - GitHub: [@AiratTop](https://github.com/AiratTop)
